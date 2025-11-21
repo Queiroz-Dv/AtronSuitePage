@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtronSuite | Manutenção Inteligente para Windows</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>        
+        :root {
+            --bg-dark: #202124;        /* Theme.BackDark */
+            --bg-card: #2D3035;        /* Theme.BackLight */
+            --text-main: #E8EAED;      /* Theme.TextMain */
+            --text-muted: #9AA0A6;     /* Theme.TextMuted (Ajustado) */
+            
+            --accent-blue: #6495ED;    /* Apps (CornflowerBlue) */
+            --accent-red: #DC3545;     /* Cleaner (Danger) */
+            --accent-purple: #8A2BE2;  /* Drivers (Purple) */
+            --accent-green: #28A745;   /* Success */
+            --accent-yellow: #FFC107;  /* Warning */
+
+            --font-stack: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: rgba(32, 33, 36, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .btn-download {
+            background-color: var(--text-main);
+            color: var(--bg-dark);
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.1);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding-top: 180px;
+            padding-bottom: 100px;
+            background: radial-gradient(circle at top center, rgba(100, 149, 237, 0.15) 0%, transparent 60%);
+        }
+
+        .badge {
+            background: rgba(100, 149, 237, 0.1);
+            color: var(--accent-blue);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(100, 149, 237, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--accent-blue), #9b72cb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background-color: #5283d6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(100, 149, 237, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+        }
+
+        /* --- FEATURES GRID --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        /* Cores específicas por card */
+        .card.cleaner .card-icon { background: rgba(220, 53, 69, 0.15); color: var(--accent-red); }
+        .card.cleaner:hover { box-shadow: 0 20px 40px rgba(220, 53, 69, 0.1); }
+        
+        .card.apps .card-icon { background: rgba(100, 149, 237, 0.15); color: var(--accent-blue); }
+        .card.apps:hover { box-shadow: 0 20px 40px rgba(100, 149, 237, 0.1); }
+
+        .card.drivers .card-icon { background: rgba(138, 43, 226, 0.15); color: var(--accent-purple); }
+        .card.drivers:hover { box-shadow: 0 20px 40px rgba(138, 43, 226, 0.1); }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .card ul {
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+
+        .card li {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card li i { color: var(--accent-green); }
+
+        /* --- REQUIREMENTS & FAQ --- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .info-box h2 { margin-bottom: 30px; font-size: 2rem; }
+        
+        .req-item {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .req-item i { font-size: 24px; color: var(--text-muted); }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 0;
+        }
+
+        .faq-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .faq-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 60px 0;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        footer p { color: var(--text-muted); font-size: 0.9rem; }
+        footer .highlight { color: var(--accent-blue); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Simplificado para mobile */
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="ph ph-cpu"></i> AtronSuite
+                </div>
+                <div class="nav-links">
+                    <a href="#features">Funcionalidades</a>
+                    <a href="#requirements">Requisitos</a>
+                    <a href="#faq">Suporte</a>
+                </div>
+                <a href="#download" class="btn-download">Baixar v1.0</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <span class="badge animate">Versão 1.0 Disponível</span>
+            <h1 class="animate delay-1">Manutenção do Windows<br><span>Centralizada e Inteligente</span></h1>
+            <p class="animate delay-2">
+                Limpe arquivos temporários, atualize seus softwares e gerencie drivers 
+                em uma única interface elegante e segura.
+            </p>
+            <div class="hero-actions animate delay-3">
+                <a href="#download" class="btn-primary"><i class="ph ph-download-simple"></i> Download Grátis</a>
+                <a href="#features" class="btn-secondary">Saber Mais</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+        <div class="container">
+            <div class="features-grid">
+                <!-- Card Cleaner -->
+                <div class="card cleaner">
+                    <div class="card-icon">
+                        <i class="ph ph-broom"></i>
+                    </div>
+                    <h3>Atron Cleaner</h3>
+                    <p>Recupere espaço em disco e melhore a privacidade removendo arquivos inúteis que o sistema acumula.</p>
+                    <ul>
+                        <li><i class="ph ph-check-circle"></i> Limpeza de Windows Temp</li>
+                        <li><i class="ph ph-check-circle"></i> Limpeza de Prefetch</li>
+                        <li><i class="ph ph-check-circle"></i> Gestão Inteligente da Lixeira</li>
+                    </ul>
+                </div>
+
+                <!-- Card Apps -->
+                <div class="card apps">
+                    <div class="card-icon">
+                        <i class="ph ph-arrows-clockwise"></i>
+                    </div>
+                    <h3>Atron Apps</h3>
+                    <p>Um gerenciador poderoso que utiliza o repositório oficial Winget para manter seus programas atualizados.</p>
+                    <ul>
+                        <li><i class="ph ph-check-circle"></i> Busca automática de updates</li>
+                        <li><i class="ph ph-check-circle"></i> Filtro anti-drivers (foco em software)</li>
+                        <li><i class="ph ph-check-circle"></i> Atualização em lote (Bulk Update)</li>
+                    </ul>
+                </div>
+
+                <!-- Card Drivers -->
+                <div class="card drivers">
+                    <div class="card-icon">
+                        <i class="ph ph-wrench"></i>
+                    </div>
+                    <h3>Atron Drivers</h3>
+                    <p>Garanta a máxima performance do seu hardware com drivers de vídeo, áudio e chipset sempre recentes.</p>
+                    <ul>
+                        <li><i class="ph ph-check-circle"></i> Detecção NVIDIA, Intel, AMD</li>
+                        <li><i class="ph ph-check-circle"></i> Foco em estabilidade do sistema</li>
+                        <li><i class="ph ph-check-circle"></i> Download direto do fabricante</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section id="requirements" style="background-color: rgba(255,255,255,0.02);">
+        <div class="container">
+            <div class="grid-2">
+                <div class="info-box">
+                    <h2>Requisitos do Sistema</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 30px;">
+                        O AtronSuite foi otimizado para rodar em máquinas modernas com impacto mínimo de performance.
+                    </p>
+                    
+                    <div class="req-item">
+                        <i class="ph ph-windows-logo"></i>
+                        <div>
+                            <strong>Windows 10 ou 11</strong>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">Build 1809 ou superior</div>
+                        </div>
+                    </div>
+
+                    <div class="req-item">
+                        <i class="ph ph-shield-check"></i>
+                        <div>
+                            <strong>Permissão de Admin</strong>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">Necessário para limpeza profunda</div>
+                        </div>
+                    </div>
+
+                    <div class="req-item">
+                        <i class="ph ph-code"></i>
+                        <div>
+                            <strong>.NET Framework</strong>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">Versão 4.7.2 ou superior</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box" id="faq">
+                    <h2>Solução de Problemas</h2>
+                    
+                    <div class="faq-item">
+                        <h4><i class="ph ph-warning-circle" style="color: var(--accent-yellow)"></i> Erro "Acesso Negado"</h4>
+                        <p>Isso ocorre quando o Windows bloqueia o acesso à pasta Temp. Certifique-se de executar o AtronSuite clicando com o botão direito e escolhendo <strong>"Executar como Administrador"</strong>.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4><i class="ph ph-cloud-slash" style="color: var(--accent-red)"></i> Winget não encontra nada</h4>
+                        <p>Seu índice de pacotes pode estar desatualizado. Abra o PowerShell e digite <code>winget source update</code> para corrigir.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4><i class="ph ph-file-zip"></i> Instalação Portátil</h4>
+                        <p>O AtronSuite não requer instalação complexa. Basta extrair o arquivo ZIP e executar o <code>AtronSuite.exe</code>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA -->
+    <section id="download" style="text-align: center;">
+        <div class="container">
+            <h2>Pronto para otimizar seu PC?</h2>
+            <p style="color: var(--text-muted); margin: 20px auto 40px; max-width: 500px;">
+                Baixe agora a versão mais recente. Seguro, gratuito e open-source.
+            </p>
+            <button class="btn-primary" style="margin: 0 auto; font-size: 1.2rem; padding: 18px 40px;">
+                <i class="ph ph-download-simple"></i> Baixar AtronSuite v1.0
+            </button>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 15px;">
+                Compatível com Windows 10/11 (x64)
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="logo" style="justify-content: center; margin-bottom: 20px; opacity: 0.7;">
+                <i class="ph ph-cpu"></i> AtronSuite
+            </div>
+            <p>&copy; Desenvolvido por <span class="highlight">Queiroz</span>.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">
+                Todas as marcas registradas (Windows, NVIDIA, Intel) pertencem aos seus respectivos proprietários.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.card').forEach((el) => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
