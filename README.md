@@ -62,7 +62,7 @@ Para garantir o funcionamento correto, seu ambiente deve atender aos seguintes r
 | Erro | Causa Provável | Solução |
 | :--- | :--- | :--- |
 | **"Acesso Negado" / 0 bytes limpos** | Falta de privilégios administrativos. | Feche o programa e abra-o novamente selecionando **"Executar como Administrador"**. |
-| **Winget não encontra atualizações** | Gerenciador de pacotes desatualizado ou sem fontes. | Abra o PowerShell/CMD e digite: <br>`winget source update`<br>Aguarde e tente novamente. |
+| **Winget não encontra atualizações** | Gerenciador de pacotes desatualizado ou sem fontes. | Abra o PowerShell/CMD e digite: <br>`winget source update`<br>Aguarde e tente novamente. Caso não funcione abra o CMD e digite `winget list` e tente novamente.|
 | **Download da atualização falha** | Instabilidade na internet ou no servidor do fornecedor. | Tente novamente mais tarde. O AtronSuite usa servidores oficiais (Microsoft, Google, Adobe, etc) e não armazena arquivos. |
 
 ---
