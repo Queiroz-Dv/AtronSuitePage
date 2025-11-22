@@ -3,8 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atron Suite | Manutenção & Sentinel v1.2</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Atron Suite v1.2</title>
+    <meta name="description" content="Atron Suite: A ferramenta definitiva para otimizar, limpar e atualizar seu Windows. Inclui Sentinel Patrol com limpeza automática (Auto-Clean), atualizador de drivers e integração Winget.">
+    <meta name="keywords" content="Atron Suite, Windows Cleaner, Atualizar Drivers, Winget GUI, Sentinel Patrol, Manutenção Windows, Limpeza Automática, Otimizador PC, Eduardo Queiroz">
+    <meta name="author" content="Eduardo Queiroz (Queiroz-Dv)">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://atron-suite-page.vercel.app/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://atron-suite-page.vercel.app/">
+    <meta property="og:title" content="Atron Suite | Otimização Windows Inteligente">
+    <meta property="og:description" content="Descubra o Sentinel Patrol: Limpeza automática, gestão de drivers e monitoramento em tempo real. Baixe a versão 1.2 agora.">
+    <meta property="og:image" content="https://atron-suite-page.vercel.app/assets/og-image.jpg"> <meta property="og:locale" content="pt_BR">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://atron-suite-page.vercel.app/">
+    <meta property="twitter:title" content="Atron Suite v1.2">
+    <meta property="twitter:description" content="Otimize seu Windows com a nova engine Sentinel. Sem coleta de dados, 100% gratuito.">
+    <meta property="twitter:image" content="https://atron-suite-page.vercel.app/assets/og-image.jpg">
+
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
     <style>        
         :root {
             --bg-dark: #202124;        
@@ -61,7 +82,7 @@
             height: 70px;
         }
 
-        /* --- ANIMAÇÃO LOGO (NOVO) --- */
+        /* --- ANIMAÇÃO LOGO (HOLOGRAPHIC) --- */
         @keyframes shimmer {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
@@ -74,7 +95,7 @@
             align-items: center;
             gap: 10px;
             
-            /* Efeito Gradiente Sofisticado */
+            /* Efeito Gradiente */
             background: linear-gradient(
                 120deg, 
                 var(--accent-ui) 20%, 
@@ -84,12 +105,11 @@
             background-size: 200% auto;
             
             /* Aplica o gradiente ao texto */
-            color: var(--accent-ui); /* Fallback */
+            color: var(--accent-ui);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             
-            /* Executa a animação */
             animation: shimmer 4s linear infinite;
         }
 
@@ -182,7 +202,7 @@
         }
         .btn-secondary:hover { border-color: var(--text-muted); }
 
-        /* --- FEATURES GRID (2 POR LINHA) --- */
+        /* --- FEATURES GRID --- */
         .features-grid {
             display: grid;
             grid-template-columns: 1fr;
