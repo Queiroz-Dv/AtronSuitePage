@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
     <title>Atron Suite | Manutenção & Sentinel v1.2</title>
+    <meta name="description" content="Atron Suite: Otimize, limpe e atualize seu Windows automaticamente.">
+    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
     <style>        
         :root {
             --bg-dark: #202124;        
@@ -20,7 +25,7 @@
             
             --accent-ui: #6495ED;        /* Blue UI */
             --accent-success: #00C851;   /* Green Success */
-            --accent-project: #00B7C3;   /* Cyan for Side Projects */
+            --accent-project: #00B7C3;   /* Cyan */
 
             --font-stack: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
         }
@@ -61,7 +66,7 @@
             height: 70px;
         }
 
-        /* --- ANIMAÇÃO LOGO (HOLOGRAPHIC) --- */
+        /* Logo Holográfico */
         @keyframes shimmer {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
@@ -170,28 +175,20 @@
         }
         .btn-secondary:hover { border-color: var(--text-muted); }
 
-        /* --- FEATURES GRID --- */
+        /* --- FEATURES GRID (Layout Desktop Padrão) --- */
         .features-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr); /* 2 por linha no Desktop */
             gap: 30px;
             margin-top: 40px;
         }
 
-        @media (min-width: 768px) {
-            .features-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        /* CONFIGURAÇÃO DOS CARDS PARA ANIMAÇÃO DE LUZ */
         .card {
             background-color: var(--bg-card);
             padding: 35px;
             border-radius: 16px;
             border: 1px solid rgba(255,255,255,0.05);
-            
-            /* Transição suave para o brilho */
             transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-            
             position: relative;
             overflow: hidden;
             display: flex;
@@ -205,7 +202,7 @@
             font-size: 28px; margin-bottom: 20px;
         }
 
-        /* DEFININDO AS CORES LOCAIS DE CADA CARD */
+        /* Cores e Variáveis */
         .card.cleaner { --card-accent: var(--accent-cleaner); }
         .card.cleaner .card-icon { background: rgba(220, 53, 69, 0.15); color: var(--card-accent); }
         
@@ -218,29 +215,27 @@
         .card.sentinel { --card-accent: var(--accent-sentinel); }
         .card.sentinel .card-icon { background: rgba(255, 140, 0, 0.15); color: var(--card-accent); }
 
-        /* ESTADO HOVER DO USUÁRIO (Prevalência sobre automático) */
+        /* Efeitos */
         .card:hover { 
             transform: translateY(-8px) scale(1.02); 
             border-color: var(--card-accent);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px var(--card-accent); /* Sombra forte */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px var(--card-accent);
             z-index: 2;
         }
 
-        /* ESTADO AUTOMÁTICO (Loop) */
         .card.active-glow {
             transform: translateY(-5px);
             border-color: var(--card-accent);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2), 0 0 15px var(--card-accent); /* Sombra média */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2), 0 0 15px var(--card-accent);
         }
 
         .card h3 { font-size: 1.4rem; margin-bottom: 15px; }
         .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
-        
         .card ul { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .card li { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
         .card li i { color: var(--text-main); opacity: 0.6; }
 
-        /* --- SIDE PROJECTS COMPACTOS --- */
+        /* --- SIDE PROJECTS --- */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -249,23 +244,14 @@
         }
 
         .card.project-compact {
-            padding: 25px; 
-            min-height: auto;
-            --card-accent: var(--accent-project); /* Cor padrão para projetos */
+            padding: 25px; min-height: auto; --card-accent: var(--accent-project);
         }
-        
         .card.project-compact .card-icon {
             width: 40px; height: 40px; font-size: 20px;
             background: rgba(0, 183, 195, 0.1); color: var(--accent-project);
             margin-bottom: 15px;
         }
-        
-        /* Hover nos projetos não precisa entrar no loop automático, mas mantém estilo */
-        .card.project-compact:hover {
-            border-color: var(--accent-project);
-            box-shadow: 0 5px 15px rgba(0, 183, 195, 0.15);
-        }
-
+        .card.project-compact:hover { border-color: var(--accent-project); box-shadow: 0 5px 15px rgba(0, 183, 195, 0.15); }
         .card.project-compact h3 { font-size: 1.1rem; margin-bottom: 10px; }
         .card.project-compact p { font-size: 0.85rem; margin-bottom: 15px; }
         .card.project-compact ul { padding-top: 15px; }
@@ -285,32 +271,36 @@
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
+        .privacy-card-special {
+            background: linear-gradient(145deg, rgba(40, 167, 69, 0.05), rgba(20, 20, 20, 0.8));
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            padding: 40px;
+            border-radius: 16px;
+            animation: border-glow 3s infinite;
+        }
+        
         @keyframes border-glow {
             0% { border-color: rgba(0, 200, 81, 0.3); box-shadow: 0 0 10px rgba(0, 200, 81, 0.1); }
             50% { border-color: rgba(0, 200, 81, 0.8); box-shadow: 0 0 20px rgba(0, 200, 81, 0.3); }
             100% { border-color: rgba(0, 200, 81, 0.3); box-shadow: 0 0 10px rgba(0, 200, 81, 0.1); }
         }
 
-        .privacy-card-special {
-            background: linear-gradient(145deg, rgba(40, 167, 69, 0.05), rgba(20, 20, 20, 0.8));
-            border: 1px solid rgba(40, 167, 69, 0.3);
-            padding: 40px;
-            border-radius: 16px;
-            position: relative;
-            overflow: hidden;
-            animation: border-glow 3s infinite;
-        }
-
-        .privacy-content {
-            display: flex; align-items: flex-start; gap: 20px; position: relative; z-index: 2;
-        }
-
+        .privacy-content { display: flex; align-items: flex-start; gap: 20px; }
+        
         .repo-link {
             display: inline-flex; align-items: center; gap: 10px;
             background-color: var(--bg-card); border: 1px solid rgba(255,255,255,0.1);
             padding: 15px 30px; border-radius: 8px; font-weight: 600; color: var(--text-main); margin-top: 30px;
         }
         .repo-link:hover { background-color: rgba(255,255,255,0.05); border-color: var(--accent-ui); }
+
+        /* --- REQUIREMENTS GRID --- */
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: start;
+        }
 
         /* --- FAQ GLASS --- */
         .glass-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -351,15 +341,31 @@
         footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 40px 0; margin-top: 0; text-align: center; }
         footer p { color: var(--text-muted); font-size: 0.9rem; }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
+        /* --- MOBILE MEDIA QUERIES (ATUALIZADO) --- */
+        @media (max-width: 992px) {
+            .requirements-grid { grid-template-columns: 1fr; gap: 40px; }
             .glass-container { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
+            
             .nav-links { display: none; }
             .social-links { flex-direction: column; align-items: center; }
             .social-btn { width: 100%; justify-content: center; }
+
+            /* Reordenação Mobile (1-2-3-4) */
+            .features-grid { 
+                display: flex; 
+                flex-direction: column; 
+            }
+            #card-0 { order: 1; } /* Cleaner */
+            #card-1 { order: 2; } /* Apps */
+            #card-2 { order: 3; } /* Sentinel */
+            #card-3 { order: 4; } /* Drivers */
         }
 
-        /* Fade In */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
         .delay-1 { animation-delay: 0.1s; }
@@ -485,55 +491,34 @@
         <div class="container">
             <h2 style="text-align: center; margin-bottom: 10px;">Outros Projetos</h2>
             <p style="text-align: center; color: var(--text-muted); margin-bottom: 40px;">Ferramentas e soluções open-source desenvolvidas por Queiroz.</p>
-            
             <div class="projects-grid">
                 <div class="card project-compact">
                     <div class="card-icon"><i class="ph ph-book-open-text"></i></div>
                     <h3>Editora Ortz</h3>
-                    <p>Plataforma digital para publicações e gestão editorial.</p>
-                    <ul>
-                        <li><i class="ph ph-check"></i> Leitura Web</li>
-                        <li><i class="ph ph-check"></i> Interface Limpa</li>
-                    </ul>
-                    <a href="https://editora-ortz.vercel.app/" target="_blank" class="card-btn-small">
-                        Visitar Site <i class="ph ph-arrow-square-out"></i>
-                    </a>
+                    <p>Plataforma digital para publicações.</p>
+                    <ul><li><i class="ph ph-check"></i> Leitura Web</li><li><i class="ph ph-check"></i> Interface Limpa</li></ul>
+                    <a href="https://editora-ortz.vercel.app/" target="_blank" class="card-btn-small">Visitar Site <i class="ph ph-arrow-square-out"></i></a>
                 </div>
                 <div class="card project-compact">
                     <div class="card-icon"><i class="ph ph-kanban"></i></div>
                     <h3>Atron Tracker</h3>
-                    <p>API .NET robusta com Clean Architecture para tarefas.</p>
-                    <ul>
-                        <li><i class="ph ph-code"></i> .NET 8/9 API</li>
-                        <li><i class="ph ph-check"></i> Gestão de Acessos</li>
-                    </ul>
-                    <a href="https://github.com/Queiroz-Dv/AtronTracker/tree/RC" target="_blank" class="card-btn-small">
-                        Ver Backend <i class="ph ph-github-logo"></i>
-                    </a>
+                    <p>API .NET robusta com Clean Architecture.</p>
+                    <ul><li><i class="ph ph-code"></i> .NET 8/9 API</li><li><i class="ph ph-check"></i> Gestão de Acessos</li></ul>
+                    <a href="https://github.com/Queiroz-Dv/AtronTracker/tree/RC" target="_blank" class="card-btn-small">Ver Backend <i class="ph ph-github-logo"></i></a>
                 </div>
                 <div class="card project-compact">
                     <div class="card-icon"><i class="ph ph-desktop"></i></div>
                     <h3>Atron View</h3>
-                    <p>Interface Front-end Angular moderna e responsiva.</p>
-                    <ul>
-                        <li><i class="ph ph-code"></i> Angular Framework</li>
-                        <li><i class="ph ph-check"></i> Integração API</li>
-                    </ul>
-                    <a href="https://github.com/Queiroz-Dv/AtronTracker-WebView" target="_blank" class="card-btn-small">
-                        Ver Frontend <i class="ph ph-github-logo"></i>
-                    </a>
+                    <p>Interface Front-end Angular moderna.</p>
+                    <ul><li><i class="ph ph-code"></i> Angular Framework</li><li><i class="ph ph-check"></i> Integração API</li></ul>
+                    <a href="https://github.com/Queiroz-Dv/AtronTracker-WebView" target="_blank" class="card-btn-small">Ver Frontend <i class="ph ph-github-logo"></i></a>
                 </div>
                 <div class="card project-compact">
                     <div class="card-icon"><i class="ph ph-magic-wand"></i></div>
                     <h3>OrcMe</h3>
-                    <p>Solução Web leve para automações rápidas.</p>
-                    <ul>
-                        <li><i class="ph ph-code"></i> HTML/CSS/JS</li>
-                        <li><i class="ph ph-check"></i> Open Source</li>
-                    </ul>
-                    <a href="https://github.com/Queiroz-Dv/OrcMe" target="_blank" class="card-btn-small">
-                        Ver Código <i class="ph ph-github-logo"></i>
-                    </a>
+                    <p>Solução Web leve para automações.</p>
+                    <ul><li><i class="ph ph-code"></i> HTML/CSS/JS</li><li><i class="ph ph-check"></i> Open Source</li></ul>
+                    <a href="https://github.com/Queiroz-Dv/OrcMe" target="_blank" class="card-btn-small">Ver Código <i class="ph ph-github-logo"></i></a>
                 </div>
             </div>
         </div>
@@ -541,12 +526,10 @@
 
     <section id="requirements" style="background-color: rgba(255,255,255,0.02);">
         <div class="container">
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: start;">
+            <div class="requirements-grid">
                 <div class="info-box">
                     <h2>Requisitos</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 30px;">
-                        Otimizado para Windows 10 e 11.
-                    </p>
+                    <p style="color: var(--text-muted); margin-bottom: 30px;">Otimizado para Windows 10 e 11.</p>
                     <div class="req-item">
                         <i class="ph ph-windows-logo"></i>
                         <div><strong>Win 10 / 11</strong><div style="font-size: 0.8rem; color: var(--text-muted);">Build 1809+</div></div>
@@ -577,9 +560,7 @@
         <div class="container author-content">
             <i class="ph ph-shield-check" style="font-size: 3rem; color: var(--accent-ui); margin-bottom: 20px;"></i>
             <h2>Desenvolvedor Verificado</h2>
-            <p style="color: var(--text-muted); font-size: 1.05rem;">
-                O <strong>Atron Suite</strong> foi desenvolvido e é mantido por <strong>Eduardo Queiroz</strong>. 
-            </p>
+            <p style="color: var(--text-muted); font-size: 1.05rem;">O <strong>Atron Suite</strong> foi desenvolvido e é mantido por <strong>Eduardo Queiroz</strong>.</p>
             <div class="social-links">
                 <a href="https://www.linkedin.com/in/eduardoqueirozdev/" target="_blank" class="social-btn"><i class="ph ph-linkedin-logo"></i> LinkedIn</a>
                 <a href="https://github.com/Queiroz-Dv" target="_blank" class="social-btn"><i class="ph ph-github-logo"></i> GitHub</a>
@@ -596,9 +577,7 @@
                 <i class="ph ph-cpu"></i> Atron Suite
             </div>
             <p>&copy; 2025 Desenvolvido por Queiroz (QRZ).</p>
-            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">
-                Compatível com tecnologias Microsoft Winget e .NET 9.
-            </p>
+            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.5;">Compatível com tecnologias Microsoft Winget e .NET 9.</p>
         </div>
     </footer>
 
@@ -626,39 +605,36 @@
             observer.observe(el);
         });
 
-        // --- ANIMAÇÃO DO LOOP HORÁRIO NOS CARDS ---
-        const cardIds = ['card-0', 'card-1', 'card-2', 'card-3']; // TopLeft, TopRight, BottomRight, BottomLeft (Sentido Horário)
+        // --- LOOP HORÁRIO DE ILUMINAÇÃO ---
+        // Ordem horária no grid desktop: 0 (TL) -> 1 (TR) -> 2 (Sentinel BR) -> 3 (Drivers BL)
+        // Ordem mobile (ajustada via CSS order): 0 -> 1 -> 2 -> 3
+        const cardIds = ['card-0', 'card-1', 'card-2', 'card-3']; 
         let currentIndex = 0;
-        let loopInterval;
         let isHovering = false;
 
         function activateCard(index) {
-            // Remove glow de todos
             cardIds.forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.classList.remove('active-glow');
             });
-            // Adiciona no atual
             const currentEl = document.getElementById(cardIds[index]);
             if(currentEl) currentEl.classList.add('active-glow');
         }
 
         function startLoop() {
-            loopInterval = setInterval(() => {
+            setInterval(() => {
                 if (!isHovering) {
                     activateCard(currentIndex);
                     currentIndex = (currentIndex + 1) % cardIds.length;
                 }
-            }, 2000); // Troca a cada 2 segundos
+            }, 2000);
         }
 
-        // Configura eventos de mouse
         cardIds.forEach(id => {
             const el = document.getElementById(id);
             if(el) {
                 el.addEventListener('mouseenter', () => {
                     isHovering = true;
-                    // Remove o glow automático para deixar o hover do CSS brilhar
                     cardIds.forEach(cid => document.getElementById(cid).classList.remove('active-glow'));
                 });
                 el.addEventListener('mouseleave', () => {
@@ -667,9 +643,7 @@
             }
         });
 
-        // Inicia o loop
         startLoop();
-
     </script>
 </body>
 </html>
